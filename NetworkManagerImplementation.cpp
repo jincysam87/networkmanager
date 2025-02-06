@@ -675,6 +675,8 @@ namespace WPEFramework
             {
                 m_wlanConnected = true;
                 m_wifiSignalMonitor.startWiFiSignalStrengthMonitor(DEFAULT_WIFI_SIGNAL_TEST_INTERVAL_SEC);
+		NMLOG_ERROR("MYTEST: Calling findGatewayDevice");
+		m_upnpDiscoveryManager.findGatewayDevice("wlan0");
             }
             else
                 m_wlanConnected = false; /* Any other state is considered as WiFi not connected. */
