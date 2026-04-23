@@ -1409,6 +1409,28 @@ namespace WPEFramework
             return m_isSuccess;
         }
 
+        static std::string extractValue(const std::string& line, const std::string& key) 
+        {
+            size_t keyPos = line.find(key);
+            if (keyPos == std::string::npos) return "";
+
+            // Start of the value is right after the '='
+            size_t valStart = keyPos + key.length();
+            std::string value = line.substr(valStart);
+
+            // 1. Check and strip leading quote
+            if (!value.empty() && value.front() == '"') {
+                value.erase(0, 1);
+            }
+
+            // 2. Check and strip trailing quote
+            if (!value.empty() && value.back() == '"') {
+                value.pop_back();
+            }
+
+            return value;
+        }
+
          static void addToKnownSSIDsUpdateCb(GObject *rmObject, GAsyncResult *res, gpointer user_data)
         {
             NMRemoteConnection *remote_con = NM_REMOTE_CONNECTION(rmObject);
