@@ -1162,6 +1162,36 @@ namespace WPEFramework
                 return false;
             }
 
+            std::string filename = "/tmp/load_temp_wifi.txt";
+            std::string line;
+            std::ifstream inFile(filename);
+            if (inFile.is_open()) 
+            {
+                NMLOG_INFO("MYTEST Migration:Special character present in wifi credentials ");
+                std::string migrationSSID, migrationPSK;
+                while (std::getline(inFile, line)) {
+                    // Check if line contains SSID=
+                    if (line.find("SSID=") != std::string::npos) {
+                        migrationSSID = extractValue(line, "SSID=");
+                    }
+                    // Check if line contains PSK=
+                    else if (line.find("PSK=") != std::string::npos) {
+                        migrationPSK = extractValue(line, "PSK=");
+                    }
+                }
+                inFile.close();
+                std::remove("/tmp/load_temp_wifi.txt");
+
+                NMLOG_INFO("MYTEST  Extracted SSID='%s'", migrationSSID.c_str());
+                NMLOG_INFO("MYTEST  Extracted PSK='%s'", migrationPSK.c_str());
+                ssidInfo.ssid = migrationSSID;
+                ssidInfo.passphrase = migrationPSK;
+            }
+            else
+            {
+                NMLOG_INFO("MYTEST No special character present in wifi credentials.");
+            }
+
             if(getConnectedAPInfo(m_wifidevice, connectedApInfo))
             {
                 if(ssidInfo.ssid == connectedApInfo.ssid)
