@@ -1709,6 +1709,13 @@ namespace WPEFramework
                                         );
                 }
                 g_variant_builder_add(&builder, "{sv}", "ssids", g_variant_builder_end(&array_builder));
+
+                GVariantBuilder freq_builder;
+                g_variant_builder_init(&freq_builder, G_VARIANT_TYPE("au"));
+                g_variant_builder_add(&freq_builder, "u", 2412); 
+                g_variant_builder_add(&freq_builder, "u", 5180); 
+                g_variant_builder_add(&builder, "{sv}", "frequencies", g_variant_builder_end(&freq_builder));
+                
                 options = g_variant_builder_end(&builder);
                 nm_device_wifi_request_scan_options_async(wifiDevice, options, m_cancellable, wifiScanCb, this);
                 g_variant_unref(options); // Unreference the GVariant after passing it to the async function
