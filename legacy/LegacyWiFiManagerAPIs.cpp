@@ -636,7 +636,7 @@ namespace WPEFramework
             uint32_t rc = Core::ERROR_GENERAL;
             Exchange::INetworkManager::IStringIterator* frequencies = nullptr;
             Exchange::INetworkManager::IStringIterator* ssids = NULL;
-
+#if 0
             if (parameters.HasLabel("frequency"))
 			{
                 std::vector<string> frequencyList;
@@ -649,13 +649,14 @@ namespace WPEFramework
                     NMLOG_ERROR("Unexpected variant type in frequency parameter.");
                         returnJson(rc);
                 }
-
-                frequencies = (Core::Service<RPC::StringIterator>::Create<RPC::IStringIterator>(frequencyList));
-				if (frequencies == nullptr) {
-					returnJson(rc);
+				if (!frequencyList.empty()) {
+	                frequencies = (Core::Service<RPC::StringIterator>::Create<RPC::IStringIterator>(frequencyList));
+					if (frequencies == nullptr) {
+						returnJson(rc);
+					}
 				}
 			}
-
+#endif
             if (parameters.HasLabel("ssid"))
             {
                 string inputSSID = parameters["ssid"].String();
