@@ -611,6 +611,7 @@ namespace WPEFramework
 
                 double frequencyValue = std::stod(frequency);
                 bool ssidMatches = scanForSsidsSet.empty() || scanForSsidsSet.find(ssid) != scanForSsidsSet.end();
+				#if 0
                 bool freqMatches = m_filterFrequencies.empty();
                 if (!freqMatches)
                 {
@@ -635,6 +636,10 @@ namespace WPEFramework
 
                 if (ssidMatches && freqMatches)
                     result.Add(object);
+				#endif
+				if (ssidMatches)
+                    result.Add(object);
+				
             }
             ssids = result;
             NMLOG_DEBUG("After filtering, found %d SSIDs.", ssids.Length());
