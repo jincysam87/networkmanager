@@ -1010,7 +1010,7 @@ namespace WPEFramework
                     }
                 }
             }
-
+#if 0
             if (frequencies)
             {
                 string frequency{};
@@ -1027,7 +1027,7 @@ namespace WPEFramework
                     }
                 }
             }
-
+#endif
             nmEvent->setwifiScanOptions(true);
             if(wifi->wifiScanRequest(m_filterSsidslist))
                 rc = Core::ERROR_NONE;
